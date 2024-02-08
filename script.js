@@ -22,7 +22,7 @@ map.on("load", () => {
   map.addLayer({
     id: "parks-point",
     type: "symbol", // set layer type to symbol
-    source: "parks-data",
+    source: "parks-data", // refer to source ID
     layout: {
       "icon-image": "park-alt1", // set icon image which is uploaded to mapbox studio style
       "text-field": "{name}", // set text field to display name property in geojson
@@ -33,11 +33,32 @@ map.on("load", () => {
       "text-color": "green", // set text color
       "text-halo-color": "white", // set text halo color to white to make the text stand out more
       "text-halo-width": 1, // set text halo width so that halo is visible
+
       // set text opacity based on zoom level in step formats (not linear change)
       // >= level 10 = 0.5, >= level 14 = 0.75, >= level 18 = 1
       "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
     },
     minzoom: 10, // set minimum zoom level to display the layer
     maxzoom: 22, // set maximum zoom level to display the layer
+  });
+
+  // Add restaurants maptiles from mapbox studio
+  map.addSource("restaurants-data", {
+    type: "vector",
+    url: "mapbox://jiahao29.9aobb48h",
+  });
+
+  // Add restaurants layer to map
+  map.addLayer({
+    id: "restaurants-point",
+    type: "symbol", // set layer type to "circle"
+    source: "restaurants-data", // refer to source ID
+    "source-layer": "map-4w7t8n", // tileset name
+    layout: {
+      "icon-image": "restaurant", // set icon image which is uploaded to mapbox studio style
+      "text-field": "{name}", // set text field to display name property in geojson
+      "text-size": 12, // set text size
+      "text-offset": [0, 1.25], // set text offset
+    },
   });
 });
