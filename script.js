@@ -60,5 +60,14 @@ map.on("load", () => {
       "text-size": 12, // set text size
       "text-offset": [0, 1.25], // set text offset
     },
+    paint: {
+      "text-color": "red", // set text color
+      "text-halo-color": "white", // set text halo color to white to make the text stand out more
+      "text-halo-width": 1, // set text halo width so that halo is visible
+
+      // set text opacity based on zoom level in step formats (not linear change)
+      // >= level 10 = 0.5, >= level 14 = 0.75, >= level 18 = 1
+      "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
+    },
   });
 });
