@@ -12,6 +12,15 @@ const map = new mapboxgl.Map({
 });
 
 map.on("load", () => {
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl());
+
+  map.addControl(
+    new mapboxgl.FullscreenControl({
+      container: document.getElementById("fullscreen-section"),
+    })
+  );
+
   // Add parks geojson data source from uploaded github file
   map.addSource("parks-data", {
     type: "geojson",
@@ -27,7 +36,7 @@ map.on("load", () => {
       "icon-image": "park-alt1", // set icon image which is uploaded to mapbox studio style
       "text-field": "{name}", // set text field to display name property in geojson
       "text-size": 12, // set text size
-      "text-offset": [0, 1.25], // set text offset
+      "text-offset": [0, 1.25], // set text offset (x, y)
     },
     paint: {
       "text-color": "green", // set text color
@@ -51,22 +60,21 @@ map.on("load", () => {
   // Add restaurants layer to map
   map.addLayer({
     id: "restaurants-point",
-    type: "symbol", // set layer type to "circle"
+    type: "symbol",
     source: "restaurants-data", // refer to source ID
     "source-layer": "map-4w7t8n", // tileset name
+    // similar layout format for symbol as parks-point layer
     layout: {
-      "icon-image": "restaurant", // set icon image which is uploaded to mapbox studio style
-      "text-field": "{name}", // set text field to display name property in geojson
-      "text-size": 12, // set text size
-      "text-offset": [0, 1.25], // set text offset
+      "icon-image": "restaurant",
+      "text-field": "{name}",
+      "text-size": 12,
+      "text-offset": [0, 1.25],
     },
+    // similar paint format for symbol as parks-point layer
     paint: {
-      "text-color": "red", // set text color
-      "text-halo-color": "white", // set text halo color to white to make the text stand out more
-      "text-halo-width": 1, // set text halo width so that halo is visible
-
-      // set text opacity based on zoom level in step formats (not linear change)
-      // >= level 10 = 0.5, >= level 14 = 0.75, >= level 18 = 1
+      "text-color": "red",
+      "text-halo-color": "white",
+      "text-halo-width": 1,
       "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
     },
   });
