@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Spadina Park" },
+      "geometry": {
+        "coordinates": [-79.40776480103892, 43.678282729260076],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Riverdale Park" },
+      "geometry": {
+        "coordinates": [-79.35981781580587, 43.66697137922242],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Roundhouse Park" },
+      "geometry": {
+        "coordinates": [-79.3846755376474, 43.64156048128848],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Grange Park" },
+      "geometry": {
+        "coordinates": [-79.39229302952852, 43.652504510241414],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Queen's Park" },
+      "geometry": {
+        "coordinates": [-79.39246548306788, 43.664571627596246],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "High Park" },
+      "geometry": {
+        "coordinates": [-79.46315098532841, 43.64757697516103],
+        "type": "Point"
+      }
+    }
+  ]
+}
