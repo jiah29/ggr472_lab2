@@ -12,32 +12,24 @@ const map = new mapboxgl.Map({
 });
 
 map.on("load", () => {
-  //Add a data source containing GeoJSON data
-  map.addSource("uoft-data", {
+  // Add parks geojson data source from uploaded github file
+  map.addSource("parks-data", {
     type: "geojson",
-    data: {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          properties: {
-            name: "Sidney Smith Hall",
-          },
-          geometry: {
-            coordinates: [-79.39865237301687, 43.662343395037766],
-            type: "Point",
-          },
-        },
-      ],
-    },
+    data: "https://jiah29.github.io/ggr472_lab2/data/parks.geojson",
   });
+
+  map.addImage("park-alt1");
+
+  // Add parks layer to map
   map.addLayer({
-    id: "uoft-pnt",
-    type: "circle",
-    source: "uoft-data",
-    paint: {
-      "circle-radius": 6,
-      "circle-color": "#B42222",
+    id: "parks-point",
+    type: "symbol", // set layer type to symbol
+    source: "parks-data",
+    layout: {
+      "icon-image": "park-alt1", // set icon image from mapbox style
+      "icon-size": 1.5, // set icon size
     },
+    minzoom: 10,
+    maxzoom: 22,
   });
 });
