@@ -11,6 +11,9 @@ const map = new mapboxgl.Map({
   zoom: 12, // starting zoom level
 });
 
+var restaurant_icon_size = 1;
+var parks_icon_size = 1;
+
 map.on("load", () => {
   // Add zoom and rotation controls to the map.
   map.addControl(new mapboxgl.NavigationControl());
@@ -37,6 +40,7 @@ map.on("load", () => {
       "text-field": "{name}", // set text field to display name property in geojson
       "text-size": 12, // set text size
       "text-offset": [0, 1.25], // set text offset (x, y)
+      "icon-size": parks_icon_size, // set icon size
     },
     paint: {
       "text-color": "green", // set text color
@@ -69,6 +73,7 @@ map.on("load", () => {
       "text-field": "{name}",
       "text-size": 12,
       "text-offset": [0, 1.25],
+      "icon-size": restaurant_icon_size,
     },
     // similar paint format for symbol as parks-point layer
     paint: {
@@ -78,4 +83,80 @@ map.on("load", () => {
       "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
     },
   });
+});
+
+map.on("idle", () => {
+  const restaurantsToggle = document.getElementById("restaurants-focus");
+  restaurantsToggle.onclick = () => {
+    if (restaurant_icon_size === 1) {
+      restaurant_icon_size = 2;
+      map.setLayoutProperty(
+        "restaurants-point",
+        "icon-size",
+        restaurant_icon_size
+      );
+      restaurantsToggle.innerHTML = `<i class="fa-solid fa-search-minus"></i>`;
+    } else {
+      restaurant_icon_size = 1;
+      map.setLayoutProperty(
+        "restaurants-point",
+        "icon-size",
+        restaurant_icon_size
+      );
+      restaurantsToggle.innerHTML = `<i class="fa-solid fa-search-plus"></i>`;
+    }
+  };
+
+  const parksToggle = document.getElementById("parks-focus");
+  parksToggle.onclick = () => {
+    if (parks_icon_size === 1) {
+      parks_icon_size = 2;
+      map.setLayoutProperty("parks-point", "icon-size", parks_icon_size);
+      parksToggle.innerHTML = `<i class="fa-solid fa-search-minus"></i>`;
+    } else {
+      parks_icon_size = 1;
+      map.setLayoutProperty("parks-point", "icon-size", parks_icon_size);
+      parksToggle.innerHTML = `<i class="fa-solid fa-search-plus"></i>`;
+    }
+  };
+
+  const parksFavIcons = document.getElementById("parks-fav");
+  parksFavIcons.onclick = () => {
+    if (parksFavIcons.style.color === "red") {
+      parksFavIcons.style.color = "white";
+
+      map.flyTo({
+        center: [-79.392463, 43.659055],
+        zoom: 12,
+      });
+    } else {
+      // change icon color to red
+      parksFavIcons.style.color = "red";
+
+      map.flyTo({
+        center: [-79.359806, 43.666846],
+        zoom: 18,
+      });
+    }
+  };
+
+  const restaurantsFavIcons = document.getElementById("restaurants-fav");
+  restaurantsFavIcons.onclick = () => {
+    if (restaurantsFavIcons.style.color === "red") {
+      restaurantsFavIcons.style.color = "white";
+
+      map.flyTo({
+        center: [-79.392463, 43.659055],
+        zoom: 12,
+      });
+    } else {
+      // change icon color to red
+      restaurantsFavIcons.style.color = "red";
+
+      map.flyTo({
+        center: [-79.386348, 43.661658],
+        zoom: 18,
+      });
+    }
+  };
 });

@@ -22,22 +22,38 @@
       <h1 class="navbar-brand">My Favourite Places in Toronto</h1>
     </nav>
     <div class="row" id="fullscreen-section">
-      <div
-        class="col-auto col-md-3 col-xl-2 bg-dark text-white"
-        id="sidebar-container"
-      >
+      <div class="col-auto bg-dark text-white" id="sidebar-container">
         <ul class="nav flex-column align-items-center align-items-sm-start">
           <li class="sidebar-item">
             <i class="fa-solid fa-tree icons"></i>
             <span class="d-none d-sm-inline">Parks</span>
+            <span class="d-inline d-sm-none"> | </span>
+            <span class="focus-icons" id="parks-focus">
+              <i class="fa-solid fa-search-plus"></i
+            ></span>
+            <span class="fav-icons" id="parks-fav">
+              <i class="fa-solid fa-heart"></i
+            ></span>
           </li>
           <li class="sidebar-item">
             <i class="fa-solid fa-utensils icons"></i>
             <span class="d-none d-sm-inline">Restaurants</span>
+            <span class="d-inline d-sm-none"> | </span>
+            <span class="focus-icons" id="restaurants-focus">
+              <i class="fa-solid fa-search-plus"></i
+            ></span>
+            <span class="fav-icons" id="restaurants-fav">
+              <i class="fa-solid fa-heart"></i
+            ></span>
+          </li>
+          <li class="sidebar-item" id="coming-soon-container">
+            <span class="d-none d-sm-inline" id="coming-soon"
+              >More coming soon...</span
+            >
           </li>
         </ul>
       </div>
-      <div class="col-auto col-md-9 col-xl-10" id="main-content">
+      <div class="col" id="main-content">
         <div id="my-map" class="map-container"></div>
       </div>
     </div>

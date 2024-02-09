@@ -13,8 +13,21 @@
 
 #sidebar-container {
   height: 100vh;
-  padding-left: 1.5rem;
+  padding-left: 2rem;
   padding-top: 1rem;
+}
+
+.sidebar-item {
+  margin-bottom: 12px;
+}
+
+.focus-icons {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.fav-icons {
+  cursor: pointer;
 }
 
 #main-content {
@@ -23,4 +36,19 @@
 
 .icons {
   margin-right: 10px;
+}
+
+#coming-soon-container {
+  margin-top: 20px;
+}
+
+#coming-soon {
+  color: white;
+  border: solid 1px white;
+  background-color: red;
+  border-radius: 30px;
+  padding: 10px;
+  font-style: italic;
+  font-size: smaller;
+  opacity: 0.8;
 }
