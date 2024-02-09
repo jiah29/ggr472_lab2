@@ -19,7 +19,35 @@
   <link rel="stylesheet" href="style.css" />
   <body>
     <nav class="navbar navbar-dark bg-dark">
-      <h1 class="navbar-brand">My Favourite Places in Toronto</h1>
+      <h1 class="navbar-brand">
+        My Favourite Places in Toronto
+        <i
+          class="fa-solid fa-circle-info"
+          data-bs-container="body"
+          data-bs-toggle="popover"
+          data-bs-placement="bottom"
+          data-bs-html="true"
+          data-bs-title="Guide on using the sidebar interactivity features"
+          data-bs-content="
+            <p>
+              Use the <i class='fa-solid fa-search-plus'></i> icon 
+              to place emphasis on the selected feature layer - 
+              the relevant symbols should become double in size! Once 
+              <i class='fa-solid fa-search-plus'></i> switches to 
+              <i class='fa-solid fa-search-minus'></i>, click it again
+              to revert the size.
+            </p>
+            <p>
+              Press the <i class='fa-solid fa-heart'></i> icon to
+              navigate and zoom in to my most favourite feature out of all 
+              features in the respective layer. To go back to original zoom 
+              level, simply click the <i class='fa-solid fa-heart'></i> icon
+              again!
+            </p>
+          "
+          data-bs-trigger="hover"
+        ></i>
+      </h1>
     </nav>
     <div class="row" id="fullscreen-section">
       <div class="col-auto bg-dark text-white" id="sidebar-container">
@@ -57,12 +85,18 @@
         <div id="my-map" class="map-container"></div>
       </div>
     </div>
-    <!-- Bootstrap script -->
+    <!-- Bootstrap scripts -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- Custom script -->
     <script src="script.js"></script>
     <!-- FontAwesome script -->

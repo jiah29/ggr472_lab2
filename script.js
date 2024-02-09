@@ -1,3 +1,10 @@
+var popoverTriggerList = [].slice.call(
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+);
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl);
+});
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoiamlhaGFvMjkiLCJhIjoiY2xyNHhudjJsMDFrajJxbWp6ZHlqamR2MyJ9.GLj7pIC0m-_eGRtGH4AJww"; //Add default public map token from your Mapbox account
 
