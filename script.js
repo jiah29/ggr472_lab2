@@ -6,6 +6,8 @@
 // Created by Jia Hao Choo for GGR472 Lab 2 (Winter 2024)
 // ============================================================================
 
+// These functions is used to enable popovers on thwe webpage from Bootstrap v5.0
+// Reference: https://getbootstrap.com/docs/5.0/components/popovers/
 var popoverTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="popover"]')
 );
@@ -13,12 +15,12 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl);
 });
 
+// access token for mapbox
 mapboxgl.accessToken =
   "pk.eyJ1IjoiamlhaGFvMjkiLCJhIjoiY2xyNHhudjJsMDFrajJxbWp6ZHlqamR2MyJ9.GLj7pIC0m-_eGRtGH4AJww"; //Add default public map token from your Mapbox account
 
-// Initialze a new map object into my-map div
-// using custom style created with Mapbox Studio
-// and set the starting position and zoom level
+// Initialze a new map object into my-map div using custom style created
+// with Mapbox Studio and set the starting position and zoom level
 const map = new mapboxgl.Map({
   container: "my-map", // map container ID
   style: "mapbox://styles/jiahao29/clscokc0602v201qs1xkic4op", // custom style url
@@ -26,18 +28,25 @@ const map = new mapboxgl.Map({
   zoom: 12, // starting zoom level
 });
 
+// variable for dynamic icon sizes for restaurants and parks
 var restaurant_icon_size = 1;
 var parks_icon_size = 1;
 
+// functions that trigger when the map is loaded
 map.on("load", () => {
   // Add zoom and rotation controls to the map.
   map.addControl(new mapboxgl.NavigationControl());
 
+  // Add enter full screen control to allow the section
+  // with id = fullscreen-section to enter full screen
   map.addControl(
     new mapboxgl.FullscreenControl({
       container: document.getElementById("fullscreen-section"),
     })
   );
+
+  // Add a scale control to the map
+  map.addControl(new mapboxgl.ScaleControl(), "top-right");
 
   // Add parks geojson data source from uploaded github file
   map.addSource("parks-data", {
@@ -55,7 +64,7 @@ map.on("load", () => {
       "text-field": "{name}", // set text field to display name property in geojson
       "text-size": 12, // set text size
       "text-offset": [0, 1.25], // set text offset (x, y)
-      "icon-size": parks_icon_size, // set icon size
+      "icon-size": parks_icon_size, // set icon size according to variable
     },
     paint: {
       "text-color": "green", // set text color
@@ -73,7 +82,7 @@ map.on("load", () => {
   // Add restaurants maptiles from mapbox studio
   map.addSource("restaurants-data", {
     type: "vector",
-    url: "mapbox://jiahao29.9aobb48h",
+    url: "mapbox://jiahao29.9aobb48h", // maptiles url from mapbox studio
   });
 
   // Add restaurants layer to map
@@ -81,7 +90,7 @@ map.on("load", () => {
     id: "restaurants-point",
     type: "symbol",
     source: "restaurants-data", // refer to source ID
-    "source-layer": "map-4w7t8n", // tileset name
+    "source-layer": "map-4w7t8n", // tileset name from mapbox studio
     // similar layout format for symbol as parks-point layer
     layout: {
       "icon-image": "restaurant",
@@ -100,28 +109,36 @@ map.on("load", () => {
   });
 });
 
+// functions that trigger when the map is idle after load
 map.on("idle", () => {
+  // Add an onclick event listener on the "restaurants-focus" element
+  // to change the icon size of restaurants
   const restaurantsToggle = document.getElementById("restaurants-focus");
   restaurantsToggle.onclick = () => {
     if (restaurant_icon_size === 1) {
+      // make the icon size bigger
       restaurant_icon_size = 2;
       map.setLayoutProperty(
         "restaurants-point",
         "icon-size",
         restaurant_icon_size
       );
+      // change the icon to zoom out sign
       restaurantsToggle.innerHTML = `<i class="fa-solid fa-search-minus"></i>`;
     } else {
+      // make the icon size smaller
       restaurant_icon_size = 1;
       map.setLayoutProperty(
         "restaurants-point",
         "icon-size",
         restaurant_icon_size
       );
+      // change the icon to zoom in sign
       restaurantsToggle.innerHTML = `<i class="fa-solid fa-search-plus"></i>`;
     }
   };
 
+  // similar function as above to change parks icon size
   const parksToggle = document.getElementById("parks-focus");
   parksToggle.onclick = () => {
     if (parks_icon_size === 1) {
@@ -135,8 +152,11 @@ map.on("idle", () => {
     }
   };
 
+  // Event listener function to zoom in and out of my most favourite park when
+  // the "parks-fav" element is clicked
   const parksFavIcons = document.getElementById("parks-fav");
   parksFavIcons.onclick = () => {
+    // if the icon color is red, change it to white and zoom out
     if (parksFavIcons.style.color === "red") {
       parksFavIcons.style.color = "white";
 
@@ -145,7 +165,7 @@ map.on("idle", () => {
         zoom: 12,
       });
     } else {
-      // change icon color to red
+      // change icon color to red and zoom in to the park
       parksFavIcons.style.color = "red";
 
       map.flyTo({
@@ -155,6 +175,7 @@ map.on("idle", () => {
     }
   };
 
+  // similar function as above to zoom in and out of my most favourite restaurant
   const restaurantsFavIcons = document.getElementById("restaurants-fav");
   restaurantsFavIcons.onclick = () => {
     if (restaurantsFavIcons.style.color === "red") {
@@ -165,7 +186,6 @@ map.on("idle", () => {
         zoom: 12,
       });
     } else {
-      // change icon color to red
       restaurantsFavIcons.style.color = "red";
 
       map.flyTo({
