@@ -26,9 +26,13 @@
   <!-- Custom stylesheet -->
   <link rel="stylesheet" href="style.css" />
   <body>
+    <!-- Navbar section with title -->
     <nav class="navbar navbar-dark bg-dark">
       <h1 class="navbar-brand">
         My Favourite Places in Toronto
+
+        <!-- Instruction/guide popup feature on the 'info' icon using bootstrap.
+        Triggered when hovering over the info icon -->
         <i
           class="fa-solid fa-circle-info"
           data-bs-container="body"
@@ -57,31 +61,58 @@
         ></i>
       </h1>
     </nav>
+
+    <!-- This is the section that will take over the entire screen
+    when entering fullscreen mode using map controls -->
     <div class="row" id="fullscreen-section">
+      <!-- Sidebar section acting as a legend for the different layers
+      along with map controls -->
       <div class="col-auto bg-dark text-white" id="sidebar-container">
         <ul class="nav flex-column align-items-center align-items-sm-start">
+          <!-- Sidebar items list -->
+
+          <!-- For parks layer -->
           <li class="sidebar-item">
+            <!-- Icon symbol representing the layer -->
             <i class="fa-solid fa-tree icons"></i>
+
+            <!-- Name of layer will be replaced simply by | on smaller screen -->
             <span class="d-none d-sm-inline">Parks</span>
             <span class="d-inline d-sm-none"> | </span>
+
+            <!-- Controls to make all parks symbol on map double in size -->
             <span class="focus-icons" id="parks-focus">
               <i class="fa-solid fa-search-plus"></i
             ></span>
+
+            <!-- Controls to zoom/fly to my favourite parks on map -->
             <span class="fav-icons" id="parks-fav">
               <i class="fa-solid fa-heart"></i
             ></span>
           </li>
+
+          <!-- For restaurants layer -->
           <li class="sidebar-item">
+            <!-- Icon symbol representing the layer -->
             <i class="fa-solid fa-utensils icons"></i>
+
+            <!-- Name of layer will be replaced simply by | on smaller screen -->
             <span class="d-none d-sm-inline">Restaurants</span>
             <span class="d-inline d-sm-none"> | </span>
+
+            <!-- Controls to make all restaurants symbol on map double in size -->
             <span class="focus-icons" id="restaurants-focus">
               <i class="fa-solid fa-search-plus"></i
             ></span>
+
+            <!-- Controls to zoom/fly to my favourite restaurant on map -->
             <span class="fav-icons" id="restaurants-fav">
               <i class="fa-solid fa-heart"></i
             ></span>
           </li>
+
+          <!-- A coming soon text to indicate more layers to be added
+          in the future...maybe -->
           <li class="sidebar-item" id="coming-soon-container">
             <span class="d-none d-sm-inline" id="coming-soon"
               >More coming soon...</span
@@ -89,10 +120,13 @@
           </li>
         </ul>
       </div>
+
+      <!-- Main content section with the map -->
       <div class="col" id="main-content">
         <div id="my-map" class="map-container"></div>
       </div>
     </div>
+
     <!-- Bootstrap scripts -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -104,7 +138,6 @@
       integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
       crossorigin="anonymous"
     ></script>
-
     <!-- Custom script -->
     <script src="script.js"></script>
     <!-- FontAwesome script -->
