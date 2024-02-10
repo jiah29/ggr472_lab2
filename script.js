@@ -24,8 +24,8 @@ mapboxgl.accessToken =
 const map = new mapboxgl.Map({
   container: "my-map", // map container ID
   style: "mapbox://styles/jiahao29/clscokc0602v201qs1xkic4op", // custom style url
-  center: [-79.392463, 43.659055], // starting position [lng, lat]
-  zoom: 12, // starting zoom level
+  center: [-79.370729, 43.719518], // starting position [lng, lat]
+  zoom: 10, // starting zoom level
 });
 
 // variable for dynamic icon sizes for restaurants and parks
@@ -86,27 +86,55 @@ map.on("load", () => {
   });
 
   // Add restaurants layer to map
-  map.addLayer({
-    id: "restaurants-point",
-    type: "symbol",
-    source: "restaurants-data", // refer to source ID
-    "source-layer": "map-4w7t8n", // tileset name from mapbox studio
-    // similar layout format for symbol as parks-point layer
-    layout: {
-      "icon-image": "restaurant",
-      "text-field": "{name}",
-      "text-size": 12,
-      "text-offset": [0, 1.25],
-      "icon-size": restaurant_icon_size,
+  map.addLayer(
+    {
+      id: "restaurants-point",
+      type: "symbol",
+      source: "restaurants-data", // refer to source ID
+      "source-layer": "map-4w7t8n", // tileset name from mapbox studio
+      // similar layout format for symbol as parks-point layer
+      layout: {
+        "icon-image": "restaurant",
+        "text-field": "{name}",
+        "text-size": 12,
+        "text-offset": [0, 1.25],
+        "icon-size": restaurant_icon_size,
+      },
+      // similar paint format for symbol as parks-point layer
+      paint: {
+        "text-color": "red",
+        "text-halo-color": "white",
+        "text-halo-width": 1,
+        "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
+      },
+      minzoom: 10, // set minimum zoom level to display the layer
+      maxzoom: 22, // set maximum zoom level to display the layer
     },
-    // similar paint format for symbol as parks-point layer
-    paint: {
-      "text-color": "red",
-      "text-halo-color": "white",
-      "text-halo-width": 1,
-      "text-opacity": ["step", ["zoom"], 0, 10, 0.5, 14, 0.75, 18, 1],
-    },
+    "parks-point"
+  ); // make ure to add restaurants layer after parks layer
+
+  // Add naighbourhood maptiles from mapbox studio
+  map.addSource("neighbourhood-data", {
+    type: "vector",
+    url: "mapbox://jiahao29.74mlfl6m", // maptiles url from mapbox studio
   });
+
+  // Add neighbourbood layer to map
+  map.addLayer(
+    {
+      id: "neighbourhood-polygon",
+      type: "fill", // set layer type to fill
+      source: "neighbourhood-data", // refer to source ID
+      "source-layer": "toneighshape-7z4bus", // tileset name from mapbox studio
+      paint: {
+        "fill-color": "rgba(255, 0, 0, 0.05)", // set fill color with opacity
+        "fill-outline-color": "rgba(0, 0, 0, 0.5)", // set fill outline color with opacity
+      },
+      minzoom: 10, // set minimum zoom level to display the layer
+      maxzoom: 12, // set maximum zoom level to display the layer
+    },
+    "restaurants-point" // make sure to add neighbourhood layer after restaurants layer
+  );
 });
 
 // functions that trigger when the map is idle after load
@@ -161,8 +189,8 @@ map.on("idle", () => {
       parksFavIcons.style.color = "white";
 
       map.flyTo({
-        center: [-79.392463, 43.659055],
-        zoom: 12,
+        center: [-79.370729, 43.719518],
+        zoom: 10,
       });
     } else {
       // change icon color to red and zoom in to the park
@@ -182,8 +210,8 @@ map.on("idle", () => {
       restaurantsFavIcons.style.color = "white";
 
       map.flyTo({
-        center: [-79.392463, 43.659055],
-        zoom: 12,
+        center: [-79.370729, 43.719518],
+        zoom: 10,
       });
     } else {
       restaurantsFavIcons.style.color = "red";
@@ -194,4 +222,28 @@ map.on("idle", () => {
       });
     }
   };
+
+  // event listener to change cursor to pointer when entering
+  // the neighbourhood polygon layer
+  map.on("mouseenter", "neighbourhood-polygon", () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  // event listener to change cursor to default when leaving
+  // polygon layer
+  map.on("mouseleave", "neighbourhood-polygon", () => {
+    map.getCanvas().style.cursor = "";
+  });
+
+  // event listener to create a popup when clicking on the neighbourhood polygon
+  // showing the name of the neighbourhood
+  map.on("click", "neighbourhood-polygon", (e) => {
+    // get the name property of the clicked polygon
+    const neighbourhoodName = e.features[0].properties.NAME;
+    // create a new popup with the name of the neighbourhood
+    new mapboxgl.Popup()
+      .setLngLat(e.lngLat)
+      .setHTML(neighbourhoodName)
+      .addTo(map);
+  });
 });
